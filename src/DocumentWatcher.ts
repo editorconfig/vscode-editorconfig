@@ -105,6 +105,10 @@ class DocumentWatcher implements EditorConfigProvider {
 
 		return editorconfig.parse(path)
 			.then((config: editorconfig.knownProps) => {
+				if (Object.keys(config).length === 0) {
+					return;
+				}
+
 				if (config.indent_size === 'tab') {
 					config.indent_size = config.tab_width;
 				}
