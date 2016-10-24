@@ -15,7 +15,8 @@ import * as Utils from './Utils';
 import {
 	endOfLineTransform,
 	trimTrailingWhitespaceTransform,
-	insertFinalNewlineTransform
+	insertFinalNewlineTransform,
+	convertIndentationTransform
 } from './transformations';
 import {
 	EditorConfigProvider
@@ -150,7 +151,8 @@ function calculatePreSaveTransformations(
 
 	return [
 		...insertFinalNewlineTransform(editorconfig, textDocument),
-		...trimTrailingWhitespaceTransform(editorconfig, textDocument)
+		...trimTrailingWhitespaceTransform(editorconfig, textDocument),
+		...convertIndentationTransform(editorconfig, textDocument)
 	];
 }
 

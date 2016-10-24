@@ -7,3 +7,6 @@ export {
 export {
 	transform as trimTrailingWhitespaceTransform
 } from './trimTrailingWhitespace';
+export {
+	transform as convertIndentationTransform
+} from './convertIndentation';

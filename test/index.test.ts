@@ -184,6 +184,64 @@ suite('EditorConfig extension', () => {
 
 		done();
 	});
+
+	test('convert indentation from tabs to 2 spaces', async (done) => {
+		const savedText = await withSetting(
+			'convert-indentation',
+			'tabs-to-2-spaces'
+		).saveText('foo\r\n\tbar\r\n\t\tbaz\r\n  qux');
+
+		setTimeout(() => {
+			assert.strictEqual(savedText, 'foo\r\n  bar\r\n    baz\r\n  qux',
+				'editor does not convert tabs to spaces correctly on save');
+
+			done();
+		}, 25);
+	});
+
+	test('convert indentation from tabs to 4 spaces', async (done) => {
+		const savedText = await withSetting(
+			'convert-indentation',
+			'tabs-to-4-spaces'
+		).saveText('foo\r\n\tbar\r\n\t\tbaz\r\n  qux\r\n    quz');
+
+		setTimeout(() => {
+			assert.strictEqual(
+				savedText,
+				'foo\r\n    bar\r\n        baz\r\n  qux\r\n    quz',
+				'editor does not convert tabs to spaces correctly on save');
+
+			done();
+		}, 25);
+	});
+
+	test('convert indentation from 2 spaces to tabs', async (done) => {
+		const savedText = await withSetting(
+			'convert-indentation',
+			'2-spaces-to-tabs'
+		).saveText('foo\r\n  bar\r\n    baz\r\n\tqux');
+
+		setTimeout(() => {
+			assert.strictEqual(savedText, 'foo\r\n\tbar\r\n\t\tbaz\r\n\tqux',
+				'editor does not convert spaces to tabs correctly on save');
+
+			done();
+		}, 25);
+	});
+
+	test('convert indentation from 4 spaces to tabs', async (done) => {
+		const savedText = await withSetting(
+			'convert-indentation',
+			'4-spaces-to-tabs'
+		).saveText('foo\r\n  bar\r\n    baz\r\n\tqux');
+
+		setTimeout(() => {
+			assert.strictEqual(savedText, 'foo\r\n  bar\r\n\tbaz\r\n\tqux',
+				'editor does not convert spaces to tabs correctly on save');
+
+			done();
+		}, 25);
+	});
 });
 
 function withSetting(
