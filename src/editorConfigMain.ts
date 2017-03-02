@@ -12,7 +12,7 @@ export function activate(ctx: ExtensionContext): void {
 	ctx.subscriptions.push(new DocumentWatcher());
 
 	// register .editorconfig file completion provider
-	let editorConfigFileSelector: DocumentSelector = ['properties', { pattern: '.editorconfig' }];
+	let editorConfigFileSelector: DocumentSelector = { language: 'properties', pattern: '**/.editorconfig' };
 	languages.registerCompletionItemProvider(editorConfigFileSelector, new EditorConfigCompletionProvider());
 
 	// register a command handler to generate a .editorconfig file
