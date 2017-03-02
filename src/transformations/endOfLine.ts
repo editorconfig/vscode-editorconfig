@@ -3,8 +3,7 @@
 import * as editorconfig from 'editorconfig';
 import {
 	EndOfLine,
-	TextEditor,
-	TextDocument
+	TextEditor
 } from 'vscode';
 
 /**
@@ -12,8 +11,7 @@ import {
  */
 export function transform(
 	editorconfig: editorconfig.knownProps,
-	editor: TextEditor,
-	textDocument: TextDocument
+	editor: TextEditor
 ): Thenable<boolean|void> {
 	const eol = {
 		lf: EndOfLine.LF,

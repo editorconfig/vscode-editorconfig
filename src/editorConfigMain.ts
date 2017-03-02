@@ -1,6 +1,11 @@
 'use strict';
 
-import { ExtensionContext, DocumentSelector, commands, languages } from 'vscode';
+import {
+	ExtensionContext,
+	DocumentSelector,
+	commands,
+	languages
+} from 'vscode';
 import EditorConfigCompletionProvider from './EditorConfigCompletionProvider';
 import DocumentWatcher from './DocumentWatcher';
 import { generateEditorConfig } from './commands/generateEditorConfig';
@@ -12,8 +17,14 @@ export function activate(ctx: ExtensionContext): void {
 	ctx.subscriptions.push(new DocumentWatcher());
 
 	// register .editorconfig file completion provider
-	const editorConfigFileSelector: DocumentSelector = { language: 'properties', pattern: '**/.editorconfig' };
-	languages.registerCompletionItemProvider(editorConfigFileSelector, new EditorConfigCompletionProvider());
+	const editorConfigFileSelector: DocumentSelector = {
+		language: 'properties',
+		pattern: '**/.editorconfig'
+	};
+	languages.registerCompletionItemProvider(
+		editorConfigFileSelector,
+		new EditorConfigCompletionProvider()
+	);
 
 	// register a command handler to generate a .editorconfig file
 	commands.registerCommand(

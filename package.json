@@ -3,10 +3,10 @@
   "displayName": "EditorConfig for VS Code",
   "description": "EditorConfig Support for Visual Studio Code",
   "publisher": "EditorConfig",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "icon": "EditorConfig_icon.png",
   "engines": {
-    "vscode": "^1.6.x"
+    "vscode": "^1.6.0"
   },
   "author": "EditorConfig Team",
   "license": "MIT",
@@ -38,24 +38,25 @@
     ]
   },
   "dependencies": {
-    "editorconfig": "0.12.2",
-    "lodash.get": "^4.3.0"
+    "editorconfig": "^0.13.2",
+    "lodash.get": "^4.4.2"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.37",
-    "@types/mocha": "^2.2.32",
-    "@types/node": "^6.0.45",
-    "tslint": "^3.7.1",
-    "typescript": "^2.0.3",
-    "vscode": "^1.0.0",
-    "vscode-test-utils": "0.0.6"
+    "@types/lodash": "^4.14.54",
+    "@types/mocha": "^2.2.39",
+    "@types/node": "^7.0.5",
+    "editorconfig": "^0.13.2",
+    "tslint": "^4.5.1",
+    "typescript": "^2.2.1",
+    "vscode": "^1.0.5",
+    "vscode-test-utils": "^0.0.8"
   },
   "scripts": {
-    "vscode:prepublish": "tsc -p ./",
-    "compile": "tsc -p ./",
-    "pretest": "npm run compile",
-    "test": "npm run lint && node ./node_modules/vscode/bin/test",
-    "lint": "tslint ./src/**/*.ts ./test/**/*.ts",
-    "postinstall": "node ./node_modules/vscode/bin/install"
+    "precompile": "node ./node_modules/vscode/bin/install",
+    "compile": "tsc",
+    "lint": "tslint --project tsconfig.json",
+    "pretest": "npm run lint && npm run compile",
+    "test": "node ./node_modules/vscode/bin/test",
+    "vscode:prepublish": "npm run compile"
   }
 }

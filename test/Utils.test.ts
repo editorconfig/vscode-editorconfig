@@ -178,8 +178,7 @@ suite('EditorConfig extension', () => {
 			}
 		].forEach(scenario => {
 			assert.deepEqual(
-				Utils.fromEditorConfig.call(
-					this,
+				Utils.fromEditorConfig(
 					scenario.config,
 					scenario.defaults
 				),
@@ -242,8 +241,7 @@ suite('EditorConfig extension', () => {
 			}
 		].forEach(scenario => {
 			assert.deepEqual(
-				Utils.toEditorConfig.call(
-					this,
+				Utils.toEditorConfig(
 					scenario.options
 				),
 				scenario.expected

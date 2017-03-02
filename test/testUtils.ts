@@ -14,15 +14,14 @@ export async function getOptionsForFixture(file: string[]) {
 }
 
 export function getFixturePath(file: string[]) {
-	return path.join.apply(
-		this,
-		[
+	return path.join(
+		...([
 			__dirname,
 			'..',
 			'..',
 			'test',
 			'fixtures'
-		].concat(file)
+		].concat(file))
 	);
 }
 

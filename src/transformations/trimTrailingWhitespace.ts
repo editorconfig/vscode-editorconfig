@@ -50,7 +50,7 @@ export function transform(
 	return trimmingOperations;
 }
 
-function trimLineTrailingWhitespace(line: TextLine) {
+function trimLineTrailingWhitespace(line: TextLine): TextEdit | void {
 	const trimmedLine = trimTrailingWhitespace(line.text);
 
 	if (trimmedLine === line.text) {
