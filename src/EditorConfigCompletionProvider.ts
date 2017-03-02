@@ -3,7 +3,7 @@ import { TextDocument, Range, Position } from 'vscode'
 
 class EditorConfigCompletionProvider implements CompletionItemProvider {
 
-	private properties: Property[] = [
+	private readonly properties: Property[] = [
 		new Property("root", ["true", "false"]),
 		new Property("charset", ["utf-8", "utf-8-bom", "utf-16be", "utf-16le", "latin1"]),
 		new Property("end_of_line", ["lf", "cr", "crlf"]),
@@ -16,23 +16,38 @@ class EditorConfigCompletionProvider implements CompletionItemProvider {
 
 	// =========================================================================
 	// PUBLIC INTERFACE
+	// =========================================================================
 	public provideCompletionItems(document: TextDocument, position: Position, token: CancellationToken): CompletionItem[] {
 		// get text where code completion was activated
 		let rangeFromLineStart = new Range(new Position(position.line, 0), position);
 		let lineText = document.getText(rangeFromLineStart);
 
 		// check if checking for property names or values
-		if (lineText.indexOf("=") >= 0) {
-			let propertyName = this.extractPropertyName(lineText);
-			let propertyValues = this.filterPropertyValues(propertyName);
-			return this.convertPropertyValuesToCompletionItems(propertyValues);
+		let lineTextHasPropertyName = lineText.indexOf("=") >= 0;
+
+		if (lineTextHasPropertyName) {
+			return this.autoCompletePropertyValues(lineText);
 		} else {
-			return this.convertPropertyNamesToCompletionItems(this.properties);
+			return this.autoCompletePropertyNames();
 		}
 	}
 
 	// =========================================================================
-	// PARSING
+	// AUTO COMPLETE
+	// =========================================================================
+	private autoCompletePropertyValues(lineText: string): CompletionItem[] {
+		let propertyName = this.extractPropertyName(lineText);
+		let propertyValues = this.filterPropertyValues(propertyName);
+		return this.convertPropertyValuesToCompletionItems(propertyValues);
+	}
+
+	private autoCompletePropertyNames(): CompletionItem[] {
+		return this.convertPropertyNamesToCompletionItems(this.properties);
+	}
+
+	// =========================================================================
+	// PARSER
+	// =========================================================================
 	private extractPropertyName(lineText: string): string {
 		let lineTextParts = lineText.split("=");
 		if (lineTextParts.length == 0) {
@@ -43,7 +58,8 @@ class EditorConfigCompletionProvider implements CompletionItemProvider {
 	}
 
 	// =========================================================================
-	// FILTERING
+	// FILTERS
+	// =========================================================================
 	private filterPropertyValues(propertyName: string): string[] {
 		// filter
 		let matchingProperty = this.properties.find(property => property.name == propertyName);
@@ -59,6 +75,7 @@ class EditorConfigCompletionProvider implements CompletionItemProvider {
 
 	// =========================================================================
 	// CONVERTERS
+	// =========================================================================
 	private convertPropertyNamesToCompletionItems(properties: Property[]): CompletionItem[] {
 		return properties.map(property => new CompletionItem(property.name, CompletionItemKind.Property));
 	}
@@ -67,6 +84,7 @@ class EditorConfigCompletionProvider implements CompletionItemProvider {
 		return values.map(value => new CompletionItem(value, CompletionItemKind.Value));
 	}
 }
+
 class Property {
 	name: string;
 	values: string[];
