@@ -1,5 +1,3 @@
-'use strict';
-
 import * as assert from 'assert';
 import * as Utils from '../src/Utils';
 

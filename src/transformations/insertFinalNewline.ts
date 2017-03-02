@@ -1,5 +1,3 @@
-'use strict';
-
 import * as get from 'lodash.get';
 import * as editorconfig from 'editorconfig';
 import {

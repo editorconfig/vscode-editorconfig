@@ -1,5 +1,3 @@
-'use strict';
-
 import * as editorconfig from 'editorconfig';
 import {
 	EndOfLine,
