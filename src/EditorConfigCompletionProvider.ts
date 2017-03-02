@@ -19,11 +19,11 @@ class EditorConfigCompletionProvider implements CompletionItemProvider {
 	// =========================================================================
 	public provideCompletionItems(document: TextDocument, position: Position, token: CancellationToken): CompletionItem[] {
 		// get text where code completion was activated
-		let rangeFromLineStart = new Range(new Position(position.line, 0), position);
-		let lineText = document.getText(rangeFromLineStart);
+		const rangeFromLineStart = new Range(new Position(position.line, 0), position);
+		const lineText = document.getText(rangeFromLineStart);
 
 		// check if checking for property names or values
-		let lineTextHasPropertyName = lineText.indexOf('=') >= 0;
+		const lineTextHasPropertyName = lineText.indexOf('=') >= 0;
 
 		if (lineTextHasPropertyName) {
 			return this.autoCompletePropertyValues(lineText);
@@ -40,8 +40,8 @@ class EditorConfigCompletionProvider implements CompletionItemProvider {
 	// AUTO COMPLETE
 	// =========================================================================
 	private autoCompletePropertyValues(lineText: string): CompletionItem[] {
-		let propertyName = this.extractPropertyName(lineText);
-		let propertyValues = this.filterPropertyValues(propertyName);
+		const propertyName = this.extractPropertyName(lineText);
+		const propertyValues = this.filterPropertyValues(propertyName);
 		return this.convertPropertyValuesToCompletionItems(propertyValues);
 	}
 
@@ -53,11 +53,11 @@ class EditorConfigCompletionProvider implements CompletionItemProvider {
 	// PARSER
 	// =========================================================================
 	private extractPropertyName(lineText: string): string {
-		let lineTextParts = lineText.split('=');
+		const lineTextParts = lineText.split('=');
 		if (lineTextParts.length == 0) {
 			return '';
 		}
-		let propertyName = lineTextParts[0].trim().toLowerCase();
+		const propertyName = lineTextParts[0].trim().toLowerCase();
 		return propertyName;
 	}
 
@@ -66,7 +66,7 @@ class EditorConfigCompletionProvider implements CompletionItemProvider {
 	// =========================================================================
 	private filterPropertyValues(propertyName: string): string[] {
 		// filter
-		let matchingProperty = this.properties.find(property => property.name == propertyName);
+		const matchingProperty = this.properties.find(property => property.name == propertyName);
 
 		// if not found anything, there are no values to display
 		if (matchingProperty == undefined) {
@@ -82,7 +82,7 @@ class EditorConfigCompletionProvider implements CompletionItemProvider {
 	// =========================================================================
 	private convertPropertyNamesToCompletionItems(properties: Property[]): CompletionItem[] {
 		return properties.map(property => {
-			let completionItem = new CompletionItem(property.name, CompletionItemKind.Property);
+			const completionItem = new CompletionItem(property.name, CompletionItemKind.Property);
 			completionItem.documentation = property.description;
 			return completionItem;
 		});
