@@ -3,7 +3,11 @@ typings/**
 out/test/**
 test/**
 src/**
+vscode-test/**
 **/*.map
+.editorconfig
 .gitignore
+.travis.yml
 tsconfig.json
+tslint.json
 vsc-extension-quickstart.md
