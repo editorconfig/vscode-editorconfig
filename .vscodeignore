@@ -1,9 +1,9 @@
 .vscode/**
+.vscode-test/**
 typings/**
 out/test/**
 test/**
 src/**
-vscode-test/**
 **/*.map
 .editorconfig
 .gitignore
