@@ -3,7 +3,7 @@ import {
 	CompletionItem,
 	CompletionItemKind
 } from 'vscode';
-import { TextDocument, Range, Position } from 'vscode';
+import { TextDocument, Position } from 'vscode';
 
 class EditorConfigCompletionProvider implements CompletionItemProvider {
 
@@ -128,39 +128,59 @@ class EditorConfigCompletionProvider implements CompletionItemProvider {
 		position: Position
 	): CompletionItem[] {
 		// get text where code completion was activated
-		const rangeFromLineStart = new Range(
-			new Position(position.line, 0),
-			position
+		// used to determine if autocompleting a key or a value
+		const textOfEntireLine = document.getText(
+			document.lineAt(position.line).range
 		);
-		const lineText = document.getText(rangeFromLineStart);
+		const textOfLineUpToCursor = textOfEntireLine.substring(
+			0, position.character
+		);
 
-		// check if checking for property names or values
-		const lineTextHasPropertyName = lineText.indexOf('=') >= 0;
-
-		if (lineTextHasPropertyName) {
-			return this.autoCompletePropertyValues(lineText);
+		// conditionally generate autocomplete for property names or values
+		if (this.hasPropertyKey(textOfLineUpToCursor)) {
+			return this.autoCompletePropertyValues(textOfLineUpToCursor);
 		} else {
-			return this.autoCompletePropertyNames();
+			return this.autoCompletePropertyNames(textOfEntireLine);
 		}
 	}
 
 	public resolveCompletionItem(
 		item: CompletionItem
 	): CompletionItem {
+		// return the item itself because it already constains all the info
+		// necessary to display the details
 		return item;
 	}
 
 	// =========================================================================
 	// AUTO COMPLETE
 	// =========================================================================
-	private autoCompletePropertyValues(lineText: string): CompletionItem[] {
-		const propertyName = this.extractPropertyName(lineText);
+	private autoCompletePropertyValues(
+		textOfLineUpToCursor: string
+	): CompletionItem[] {
+		const propertyName = this.extractPropertyName(textOfLineUpToCursor);
 		const propertyValues = this.filterPropertyValues(propertyName);
 		return this.convertPropertyValuesToCompletionItems(propertyValues);
 	}
 
-	private autoCompletePropertyNames(): CompletionItem[] {
-		return this.convertPropertyNamesToCompletionItems(this.properties);
+	private autoCompletePropertyNames(
+		textOfEntireLine: string
+	): CompletionItem[] {
+		return this.convertPropertyNamesToCompletionItems(
+			this.properties,
+			textOfEntireLine
+		);
+	}
+
+	// =========================================================================
+	// CHECKS
+	// =========================================================================
+	private hasPropertyKey(lineText: string): boolean {
+		return this.hasEqualsSign(lineText);
+	}
+
+	private hasEqualsSign(lineText: string): boolean {
+		return lineText.indexOf('=') >= 0;
 	}
 
 	// =========================================================================
@@ -197,14 +217,22 @@ class EditorConfigCompletionProvider implements CompletionItemProvider {
 	// CONVERTERS
 	// =========================================================================
 	private convertPropertyNamesToCompletionItems(
-		properties: Property[]
+		properties: Property[],
+		textOfEntireLine: string
 	): CompletionItem[] {
 		return properties.map(property => {
+			// basic info
 			const completionItem = new CompletionItem(
 				property.name,
 				CompletionItemKind.Property
 			);
 			completionItem.documentation = property.description;
+
+			// append equals sign if line does not have one
+			if (!this.hasEqualsSign(textOfEntireLine)) {
+				completionItem.insertText = property.name + ' = ';
+			}
+
 			return completionItem;
 		});
 	}
@@ -212,8 +240,20 @@ class EditorConfigCompletionProvider implements CompletionItemProvider {
 	private convertPropertyValuesToCompletionItems(
 		values: string[]
 	): CompletionItem[] {
+		const valuesSortOrder = {
+			true: '1',
+			false: '2',
+			unset: '9'
+		};
 		return values.map(
-			value => new CompletionItem(value, CompletionItemKind.Value)
+			value => {
+				// basic info
+				const completionItem = new CompletionItem(value, CompletionItemKind.Value);
+
+				// sort predefined values to specific order
+				completionItem.sortText = valuesSortOrder[value] || '3' + value;
+				return completionItem;
+			}
 		);
 	}
 }
