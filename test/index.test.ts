@@ -170,13 +170,13 @@ suite('EditorConfig extension', () => {
 
 		assert.strictEqual(
 			options.tabSize,
-			undefined,
+			2,
 			'editor has no tabSize defined'
 		);
 
 		assert.strictEqual(
 			options.insertSpaces,
-			undefined,
+			true,
 			'editor has no insertSpaces defined'
 		);
 
