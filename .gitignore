@@ -3,7 +3,7 @@ node_modules
 .DS_Store
 Thumbs.db
 *.log
-
+.vscode-test
 test/fixtures/end_of_line/*/test
 test/fixtures/insert_final_newline/*/test
 test/fixtures/trim_trailing_whitespace/*/test
