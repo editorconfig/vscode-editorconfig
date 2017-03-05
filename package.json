@@ -52,9 +52,9 @@
     "vscode-test-utils": "^0.0.8"
   },
   "scripts": {
-    "precompile": "node ./node_modules/vscode/bin/install",
-    "compile": "tsc",
-    "lint": "tslint --project tsconfig.json",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "compile": "tsc -p ./",
+    "lint": "tslint 'src/**/*.ts' 'test/**/*.ts'",
     "pretest": "npm run lint && npm run compile",
     "test": "node ./node_modules/vscode/bin/test",
     "vscode:prepublish": "npm run compile"
