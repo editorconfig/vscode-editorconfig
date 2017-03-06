@@ -1,9 +1,11 @@
 import {
+	Command,
 	CompletionItemProvider,
 	CompletionItem,
-	CompletionItemKind
+	CompletionItemKind,
+	Position,
+	TextDocument
 } from 'vscode';
-import { TextDocument, Position } from 'vscode';
 
 class EditorConfigCompletionProvider implements CompletionItemProvider {
 
@@ -220,6 +222,13 @@ class EditorConfigCompletionProvider implements CompletionItemProvider {
 		properties: Property[],
 		textOfEntireLine: string
 	): CompletionItem[] {
+
+		const triggerSuggestCommand: Command = {
+			command: 'editorconfig._triggerSuggestAfterDelay',
+			arguments: [],
+			title: ''
+		};
+
 		return properties.map(property => {
 			// basic info
 			const completionItem = new CompletionItem(
@@ -229,8 +238,10 @@ class EditorConfigCompletionProvider implements CompletionItemProvider {
 			completionItem.documentation = property.description;
 
 			// append equals sign if line does not have one
+			// also automatically displays IntelliSense for property values
 			if (!this.hasEqualsSign(textOfEntireLine)) {
 				completionItem.insertText = property.name + ' = ';
+				completionItem.command = triggerSuggestCommand;
 			}
 
 			return completionItem;

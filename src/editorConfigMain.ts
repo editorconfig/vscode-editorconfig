@@ -24,6 +24,17 @@ export function activate(ctx: ExtensionContext): void {
 		new EditorConfigCompletionProvider()
 	);
 
+	// register an internal command used to automatically display IntelliSense
+	// when editing a .editorconfig file
+	commands.registerCommand(
+		'editorconfig._triggerSuggestAfterDelay',
+		() => {
+			setTimeout(function () {
+				commands.executeCommand('editor.action.triggerSuggest');
+			}, 100);
+		}
+	);
+
 	// register a command handler to generate a .editorconfig file
 	commands.registerCommand(
 		'vscode.generateeditorconfig',
