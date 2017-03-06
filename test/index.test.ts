@@ -1,3 +1,4 @@
+import * as os from 'os';
 import * as assert from 'assert';
 import {
 	Position,
@@ -7,7 +8,8 @@ import {
 } from 'vscode';
 import {
 	getFixturePath,
-	getOptionsForFixture
+	getOptionsForFixture,
+	delay
 } from './testUtils';
 
 import * as utils from 'vscode-test-utils';
@@ -22,12 +24,12 @@ suite('EditorConfig extension', () => {
 			assert.strictEqual(
 				options.insertSpaces,
 				false,
-				`editor has insertSpaces: false`
+				`editor has insertSpaces: true`
 			);
 			assert.strictEqual(
 				options.tabSize,
 				n,
-				`editor has a tabSize of ${n}`
+				`editor has a tabSize of ${options.tabSize} instead of ${n}`
 			);
 		}
 	});
@@ -38,12 +40,12 @@ suite('EditorConfig extension', () => {
 			assert.strictEqual(
 				options.insertSpaces,
 				true,
-				`editor has insertSpaces: true`
+				`editor has insertSpaces: false`
 			);
 			assert.strictEqual(
 				options.tabSize,
 				n,
-				`editor has a tabSize of ${n}`
+				`editor has a tabSize of ${options.tabSize} instead of ${n}`
 			);
 		}
 	});
@@ -55,42 +57,42 @@ suite('EditorConfig extension', () => {
 			assert.strictEqual(
 				options.insertSpaces,
 				false,
-				`editor has insertSpaces: false`
+				`editor has insertSpaces: true`
 			);
 			assert.strictEqual(
 				options.tabSize,
 				expectedTabSize,
-				`editor has a tabSize of ${expectedTabSize}`
+				`editor has a tabSize of ${options.tabSize} instead of ${expectedTabSize}`
 			);
 		}
 	});
 
-	test.skip('insert_final_newline = true', async (done) => {
+	test('insert_final_newline = true', async () => {
 		const savedText = await withSetting(
 			'insert_final_newline',
 			'true'
 		).saveText('foo');
-		assert.strictEqual(savedText, 'foo\n',
-			'editor inserts final newline on save');
-		done();
+		assert.strictEqual(savedText, `foo${os.EOL}`,
+			'editor fails to insert final newline on save');
 	});
 
 	test('insert_final_newline = false', async () => {
+		const text = `foo${os.EOL}`;
 		const savedText = await withSetting(
 			'insert_final_newline',
 			'false'
-		).saveText('foo\n');
-		assert.strictEqual(savedText, 'foo\n',
-			'editor preserves final newline on save');
+		).saveText(text);
+		assert.strictEqual(savedText, text,
+			'editor fails to preserve final newline on save');
 	});
 
-	test.skip('trim_trailing_whitespace = true', async () => {
+	test('trim_trailing_whitespace = true', async () => {
 		const savedText = await withSetting(
 			'trim_trailing_whitespace',
 			'true'
 		).saveText('foo  ');
 		assert.strictEqual(savedText, 'foo',
-			'editor trims trailing whitespace on save');
+			'editor fails to trim trailing whitespace on save');
 	});
 
 	test('trim_trailing_whitespace = false', async () => {
@@ -99,10 +101,10 @@ suite('EditorConfig extension', () => {
 			'false'
 		).saveText('foo  ');
 		assert.strictEqual(savedText, 'foo  ',
-			'editor preserves trailing whitespace on save');
+			'editor fails to preserve trailing whitespace on save');
 	});
 
-	test('end_of_line = lf', async (done) => {
+	test('end_of_line = lf', async () => {
 		const doc = await withSetting(
 			'end_of_line',
 			'lf',
@@ -110,14 +112,11 @@ suite('EditorConfig extension', () => {
 				contents: 'foo\r\n'
 			}
 		).doc;
-		setTimeout(() => {
-			assert.strictEqual(doc.getText(), 'foo\n',
-				'editor converts CRLF line endings into LF on open');
-			done();
-		}, 25);
+		assert.strictEqual(doc.getText(), 'foo\n',
+			'editor fails to convert CRLF line endings into LF on open');
 	});
 
-	test('end_of_line = crlf', async (done) => {
+	test('end_of_line = crlf', async () => {
 		const doc = await withSetting(
 			'end_of_line',
 			'crlf',
@@ -125,14 +124,11 @@ suite('EditorConfig extension', () => {
 				contents: 'foo\n'
 			}
 		).doc;
-		setTimeout(() => {
-			assert.strictEqual(doc.getText(), 'foo\r\n',
-				'editor converts LF line endings into CRLF on open');
-			done();
-		}, 25);
+		assert.strictEqual(doc.getText(), 'foo\r\n',
+			'editor fails to convert LF line endings into CRLF on open');
 	});
 
-	test('end_of_line = preserve', async (done) => {
+	test('end_of_line = preserve', async () => {
 		const doc = await withSetting(
 			'end_of_line',
 			'preserve',
@@ -140,14 +136,11 @@ suite('EditorConfig extension', () => {
 				contents: 'foo\r\n'
 			}
 		).doc;
-		setTimeout(() => {
-			assert.strictEqual(doc.getText(), 'foo\r\n',
-				'editor preserves CRLF line endings on open');
-			done();
-		}, 25);
+		assert.strictEqual(doc.getText(), 'foo\r\n',
+			'editor fails to preserve CRLF line endings on open');
 	});
 
-	test('end_of_line = undefined', async (done) => {
+	test('end_of_line = undefined', async () => {
 		const doc = await withSetting(
 			'end_of_line',
 			'undefined',
@@ -155,32 +148,26 @@ suite('EditorConfig extension', () => {
 				contents: 'foo\r\n'
 			}
 		).doc;
-		setTimeout(() => {
-			assert.strictEqual(doc.getText(), 'foo\r\n',
-				'editor preserves CRLF line endings on open');
-			done();
-		}, 25);
+		assert.strictEqual(doc.getText(), 'foo\r\n',
+			'editor fails to preserve CRLF line endings on open');
 	});
 
-	test('detect indentation', async (done) => {
+	test('detect indentation', async () => {
 		const options = await getOptionsForFixture([
 			'detect-indentation',
 			'indent-size-2'
 		]);
-
+		const expectedTabSize = 2;
 		assert.strictEqual(
 			options.tabSize,
-			2,
-			'editor has no tabSize defined'
+			expectedTabSize,
+			`editor has a tabSize of ${options.tabSize} instead of ${expectedTabSize}`
 		);
-
 		assert.strictEqual(
 			options.insertSpaces,
 			true,
-			'editor has no insertSpaces defined'
+			`editor has insertSpaces: ${options.insertSpaces}`
 		);
-
-		done();
 	});
 });
 
@@ -196,19 +183,19 @@ function withSetting(
 	return {
 		doc: createDoc(options.contents),
 		saveText: async (text: string) => {
-			const doc = await createDoc();
-			const edit = new WorkspaceEdit();
-			edit.insert(doc.uri, new Position(0, 0), text);
-			assert.strictEqual(
-				await workspace.applyEdit(edit),
-				true,
-				'applies edit'
-			);
-			return await new Promise(resolve => {
+			return await new Promise<string>(async (resolve) => {
+				const doc = await createDoc();
+				const edit = new WorkspaceEdit();
+				edit.insert(doc.uri, new Position(0, 0), text);
+				assert.strictEqual(
+					await workspace.applyEdit(edit),
+					true,
+					'editor fails to apply edit'
+				);
 				workspace.onDidSaveTextDocument(savedDoc => {
 					resolve(savedDoc.getText());
 				});
-				doc.save();
+				workspace.onDidChangeTextDocument(doc.save);
 			});
 		}
 	};
@@ -221,6 +208,7 @@ function withSetting(
 		]));
 		const doc = await workspace.openTextDocument(filename);
 		await window.showTextDocument(doc);
+		await delay(50);
 		return doc;
 	}
 }
