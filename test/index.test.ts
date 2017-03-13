@@ -13,6 +13,8 @@ import {
 
 import * as utils from 'vscode-test-utils';
 
+import { wait } from './testUtils';
+
 suite('EditorConfig extension', () => {
 
 	suiteTeardown(utils.closeAllFiles);
@@ -110,51 +112,51 @@ suite('EditorConfig extension', () => {
 	});
 
 	test('end_of_line = lf', async () => {
-		const savedText = await withSetting(
+		const doc = await withSetting(
 			'end_of_line',
 			'lf',
 			{
-				contents: 'bar\r\n'
+				contents: 'foo\r\n'
 			}
-		).saveText('foo\r\n');
-		assert.strictEqual(savedText, 'foo\nbar\n',
-			'editor fails to convert CRLF line endings into LF on save');
+		).doc;
+		assert.strictEqual(doc.getText(), 'foo\n',
+			'editor fails to convert CRLF line endings into LF on open');
 	});
 
 	test('end_of_line = crlf', async () => {
-		const savedText = await withSetting(
+		const doc = await withSetting(
 			'end_of_line',
 			'crlf',
 			{
-				contents: 'bar\n'
+				contents: 'foo\n'
 			}
-		).saveText('foo\n');
-		assert.strictEqual(savedText, 'foo\r\nbar\r\n',
-			'editor fails to convert LF line endings into CRLF on save');
+		).doc;
+		assert.strictEqual(doc.getText(), 'foo\r\n',
+			'editor fails to convert LF line endings into CRLF on open');
 	});
 
 	test('end_of_line = unset', async () => {
-		const savedText = await withSetting(
+		const doc = await withSetting(
 			'end_of_line',
 			'unset',
 			{
-				contents: 'bar\n'
+				contents: 'foo\n'
 			}
-		).saveText('foo\n');
-		assert.strictEqual(savedText, 'foo\nbar\n',
-			'editor fails to preserve CRLF line endings on save');
+		).doc;
+		assert.strictEqual(doc.getText(), 'foo\n',
+			'editor fails to preserve CRLF line endings on open');
 	});
 
 	test('end_of_line is undefined', async () => {
-		const savedText = await withSetting(
+		const doc = await withSetting(
 			'end_of_line',
 			'undefined',
 			{
-				contents: 'bar\n'
+				contents: 'foo\n'
 			}
-		).saveText('foo\n');
-		assert.strictEqual(savedText, 'foo\nbar\n',
-			'editor fails to preserve CRLF line endings on save');
+		).doc;
+		assert.strictEqual(doc.getText(), 'foo\n',
+			'editor fails to preserve CRLF line endings on open');
 	});
 
 	test('detect indentation', async () => {
@@ -184,6 +186,7 @@ function withSetting(
 	} = {}
 ) {
 	return {
+		doc: createDoc(options.contents),
 		saveText: (text: string) => new Promise(async resolve => {
 			const doc = await createDoc(options.contents);
 			workspace.onDidSaveTextDocument(savedDoc => {
@@ -208,6 +211,7 @@ function withSetting(
 		]));
 		const doc = await workspace.openTextDocument(filename);
 		await window.showTextDocument(doc);
+		await wait(50);
 		return doc;
 	}
 }

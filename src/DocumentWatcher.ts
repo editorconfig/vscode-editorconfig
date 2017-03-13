@@ -94,7 +94,7 @@ class DocumentWatcher implements EditorConfigProvider {
 		const editor = window.activeTextEditor;
 		if (!editor) {
 			// No more open editors
-			return;
+			return false;
 		}
 
 		const doc = editor.document;
@@ -102,7 +102,7 @@ class DocumentWatcher implements EditorConfigProvider {
 
 		if (!editorconfig) {
 			// no configuration found for this file
-			return;
+			return false;
 		}
 
 		const newOptions = Utils.fromEditorConfig(
@@ -112,6 +112,8 @@ class DocumentWatcher implements EditorConfigProvider {
 
 		// tslint:disable-next-line:no-any
 		editor.options = newOptions as any;
+
+		return endOfLineTransform(editorconfig, editor);
 	}
 
 	public getSettingsForDocument(document: TextDocument) {
@@ -142,23 +144,19 @@ class DocumentWatcher implements EditorConfigProvider {
 		const transformations = this.calculatePreSaveTransformations(e.document);
 		e.waitUntil(transformations);
 		if (selections) {
-			transformations.then(() => {
-				window.activeTextEditor.selections = selections;
-			});
+			window.activeTextEditor.selections = selections;
 		}
 	}
 
 	private async calculatePreSaveTransformations(
 		textDocument: TextDocument
-	): Promise<TextEdit[] | void> {
+	): Promise<TextEdit[]> {
 		const editorconfig = this.getSettingsForDocument(textDocument);
 
 		if (!editorconfig) {
 			// no configuration found for this file
-			return Promise.resolve();
+			return [];
 		}
-
-		await endOfLineTransform(editorconfig, textDocument);
 
 		return [
 			...insertFinalNewlineTransform(editorconfig, textDocument),

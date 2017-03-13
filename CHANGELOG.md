@@ -1,3 +1,8 @@
+## 0.6.3
+- Undo setting of EOL just before file save.
+  - Wasn't working on background files.
+  - Waiting for [March vscode API updates](https://github.com/Microsoft/vscode/issues/15510#issuecomment-286034612) to fix properly.
+
 ## 0.6.2
 - Save/restore selections (cursors) during file save.
 
