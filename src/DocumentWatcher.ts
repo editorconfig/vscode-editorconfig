@@ -60,14 +60,15 @@ class DocumentWatcher implements EditorConfigProvider {
 
 		subscriptions.push(workspace.onWillSaveTextDocument(async e => {
 			let selections: Selection[];
-			if (window.activeTextEditor.document === e.document) {
-				selections = window.activeTextEditor.selections;
+			const activeTextEditor = window.activeTextEditor;
+			if (activeTextEditor && activeTextEditor.document === e.document) {
+				selections = activeTextEditor.selections;
 			}
 			const transformations = this.calculatePreSaveTransformations(e.document);
 			e.waitUntil(transformations);
 			if (selections) {
 				transformations.then(() => {
-					window.activeTextEditor.selections = selections;
+					activeTextEditor.selections = selections;
 				});
 			}
 		}));
