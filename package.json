@@ -1,7 +1,7 @@
 {
   "name": "EditorConfig",
   "displayName": "EditorConfig for VS Code",
-  "description": "EditorConfig Support for Visual Studio Code",
+  "description": "EditorConfig Support for Visual Studio Code.",
   "publisher": "EditorConfig",
   "version": "0.9.4",
   "icon": "EditorConfig_icon.png",
