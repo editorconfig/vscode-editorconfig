@@ -155,15 +155,15 @@ class DocumentWatcher implements EditorConfigProvider {
 
 		const doc = editor.document;
 		const relativePath = workspace.asRelativePath(doc.fileName);
-		const editorconfig = this.getSettingsForDocument(doc);
+		const editorconfigSettings = this.getSettingsForDocument(doc);
 
-		if (!editorconfig) {
+		if (!editorconfigSettings) {
 			this.log(`${relativePath}: No configuration.`);
 			return Promise.resolve();
 		}
 
 		const newOptions = fromEditorConfig(
-			editorconfig,
+			editorconfigSettings,
 			this.getDefaultSettings()
 		);
 
@@ -190,10 +190,10 @@ class DocumentWatcher implements EditorConfigProvider {
 	private async calculatePreSaveTransformations(
 		doc: TextDocument
 	): Promise<TextEdit[]> {
-		const editorconfig = this.getSettingsForDocument(doc);
+		const editorconfigSettings = this.getSettingsForDocument(doc);
 		const relativePath = workspace.asRelativePath(doc.fileName);
 
-		if (!editorconfig) {
+		if (!editorconfigSettings) {
 			this.log(`${relativePath}: No configuration found for pre-save.`);
 			return [];
 		}
@@ -202,7 +202,7 @@ class DocumentWatcher implements EditorConfigProvider {
 			...this.preSaveTransformations.map(
 				transformer => {
 					const { edits, message } = transformer.transform(
-						editorconfig,
+						editorconfigSettings,
 						doc
 					);
 					if (edits instanceof Error) {
