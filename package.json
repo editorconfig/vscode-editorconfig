@@ -43,14 +43,13 @@
     "lodash.get": "^4.4.2"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.61",
-    "@types/mocha": "^2.2.40",
-    "@types/node": "^7.0.12",
-    "editorconfig": "^0.13.2",
+    "@types/lodash": "^4.14.70",
+    "@types/mocha": "^2.2.41",
+    "@types/node": "^8.0.14",
     "rimraf": "^2.6.1",
-    "tslint": "^4.5.1",
-    "typescript": "^2.2.2",
-    "vscode": "^1.1.0",
+    "tslint": "^5.5.0",
+    "typescript": "^2.4.2",
+    "vscode": "^1.1.4",
     "vscode-test-utils": "^0.0.8"
   },
   "scripts": {

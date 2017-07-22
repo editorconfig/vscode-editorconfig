@@ -8,7 +8,7 @@ abstract class PreSaveTransformation {
 	): {
 		edits: TextEdit[] | Error;
 		message?: string;
-	}
+	};
 }
 
 export default PreSaveTransformation;

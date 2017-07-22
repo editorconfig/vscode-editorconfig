@@ -14,7 +14,7 @@ import PreSaveTransformation from './PreSaveTransformation';
 
 class TrimTrailingWhitespace extends PreSaveTransformation {
 	transform(
-		editorconfig: editorconfig.knownProps,
+		editorconfigProperties: editorconfig.knownProps,
 		doc: TextDocument
 	) {
 		const editorTrimsWhitespace = workspace
@@ -22,7 +22,7 @@ class TrimTrailingWhitespace extends PreSaveTransformation {
 			.get('trimTrailingWhitespace', false);
 
 		if (editorTrimsWhitespace) {
-			if (editorconfig.trim_trailing_whitespace === false) {
+			if (editorconfigProperties.trim_trailing_whitespace === false) {
 				const message = [
 					'The trimTrailingWhitespace workspace or user setting',
 					'is overriding the EditorConfig setting for this file.'
@@ -34,7 +34,7 @@ class TrimTrailingWhitespace extends PreSaveTransformation {
 			}
 		}
 
-		if (!editorconfig.trim_trailing_whitespace) {
+		if (!editorconfigProperties.trim_trailing_whitespace) {
 			return { edits: [] };
 		}
 

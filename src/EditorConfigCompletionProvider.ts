@@ -7,6 +7,18 @@ import {
 	TextDocument
 } from 'vscode';
 
+class Property {
+	name: string;
+	values: string[];
+	description: string;
+
+	constructor(name: string, values: string[], description: string) {
+		this.name = name;
+		this.values = values;
+		this.description = description;
+	}
+}
+
 class EditorConfigCompletionProvider implements CompletionItemProvider {
 
 	private readonly properties: Property[] = [
@@ -266,18 +278,6 @@ class EditorConfigCompletionProvider implements CompletionItemProvider {
 				return completionItem;
 			}
 		);
-	}
-}
-
-class Property {
-	name: string;
-	values: string[];
-	description: string;
-
-	constructor(name: string, values: string[], description: string) {
-		this.name = name;
-		this.values = values;
-		this.description = description;
 	}
 }
 
