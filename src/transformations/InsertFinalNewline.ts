@@ -78,12 +78,12 @@ export default class InsertFinalNewline extends PreSaveTransformation {
 			return this.doNothing();
 		}
 
-		if (editorconfigProperties.insert_final_newline
+		if (editorconfigProperties.insert_final_newline === true
 			&& !lastLine.isEmptyOrWhitespace) {
 				return this.insertFinalNewline(editorconfigProperties, lastLine);
 		}
 
-		if (!editorconfigProperties.insert_final_newline
+		if (editorconfigProperties.insert_final_newline === false
 			&& lastLine.isEmptyOrWhitespace) {
 			return this.deleteFinalNewlines(doc, lineCount, lastLine);
 		}
