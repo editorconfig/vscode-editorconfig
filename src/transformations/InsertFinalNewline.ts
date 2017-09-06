@@ -73,7 +73,8 @@ export default class InsertFinalNewline extends PreSaveTransformation {
 		const lineCount = doc.lineCount;
 		const lastLine = doc.lineAt(lineCount - 1);
 
-		if (lineCount === 0 || editorconfigProperties.insert_final_newline == null) {
+		if (lineCount === 0
+			|| editorconfigProperties.insert_final_newline === undefined) {
 			return this.doNothing();
 		}
 
