@@ -1,6 +1,6 @@
 import * as assert from 'assert'
 import { KnownProps } from 'editorconfig'
-import * as api from '../src/api'
+import * as api from '../../api'
 
 suite('EditorConfig extension', () => {
 	// Defines a Mocha unit test
