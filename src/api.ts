@@ -1,6 +1,6 @@
 import * as editorconfig from 'editorconfig'
-import * as compact from 'lodash.compact'
-import * as get from 'lodash.get'
+import compact = require('lodash.compact')
+import get = require('lodash.get')
 import * as path from 'path'
 import { window, workspace, TextDocument, TextEditorOptions } from 'vscode'
 
@@ -138,7 +138,7 @@ export function resolveFile(
 		const ext = languageExtensionMap[doc.languageId] || doc.languageId
 		return path.join(
 			...compact([
-				workspace.getWorkspaceFolder(doc.uri),
+				workspace.getWorkspaceFolder(doc.uri) as unknown,
 				`${doc.fileName}.${ext}`,
 			]),
 		)

@@ -1,24 +1,19 @@
 {
   "compilerOptions": {
     "baseUrl": "src",
+    "declaration": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["es6"],
     "module": "commonjs",
-    "target": "es6",
+    "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noImplicitUseStrict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "out",
-    "lib": ["es6"],
+    "rootDir": "src",
     "sourceMap": true,
-    "forceConsistentCasingInFileNames": true,
-    "declaration": true
+    "target": "es6"
   },
-  "include": [
-    "node_modules/@types/node/index.d.ts",
-    "node_modules/@types/lodash/index.d.ts",
-    "src/**/*.ts",
-    "test/**/*.ts"
-  ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "out", ".vscode-test"]
 }

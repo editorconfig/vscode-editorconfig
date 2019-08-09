@@ -1,4 +1,4 @@
-import * as get from 'lodash.get'
+import get = require('lodash.get')
 import * as fs from 'fs'
 import * as path from 'path'
 import { workspace, window, Uri } from 'vscode'

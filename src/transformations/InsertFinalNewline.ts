@@ -1,4 +1,4 @@
-import * as get from 'lodash.get'
+import get = require('lodash.get')
 import { KnownProps } from 'editorconfig'
 import { TextDocument, Position, TextEdit } from 'vscode'
 

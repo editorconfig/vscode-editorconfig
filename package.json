@@ -33,8 +33,8 @@
   "activationEvents": [
     "*"
   ],
-  "main": "./out/src/editorConfigMain",
-  "types": "./out/src/editorConfigMain.d.ts",
+  "main": "./out/editorConfigMain.js",
+  "types": "./out/editorConfigMain.d.ts",
   "contributes": {
     "commands": [
       {
@@ -64,32 +64,40 @@
     "lodash.get": "^4.4.2"
   },
   "devDependencies": {
+    "@types/glob": "^7.1.1",
     "@types/lodash": "^4.14.121",
-    "@types/mocha": "^5.2.6",
-    "@types/node": "^10.12.26",
+    "@types/lodash.compact": "^3.0.6",
+    "@types/lodash.get": "^4.4.6",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^10.14.15",
+    "@types/vscode": "^1.37.0",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
+    "cpy-cli": "^2.0.0",
     "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-config-xo": "^0.26.0",
     "eslint-plugin-prettier": "^3.1.0",
+    "glob": "^7.1.4",
     "husky": "^3.0.3",
     "lint-staged": "^9.2.1",
+    "mocha": "^4.1.0",
     "prettier": "^1.18.2",
     "rimraf": "^2.6.3",
     "tslint": "^5.12.1",
     "typescript": "^3.3.3",
-    "vscode": "^1.1.29",
+    "vscode-test": "^1.2.0",
     "vscode-test-utils": "0.0.9"
   },
   "scripts": {
-    "postinstall": "node ./node_modules/vscode/bin/install",
-    "precompile": "rimraf ./out",
-    "compile": "tsc",
-    "lint": "eslint src/**/*.ts test/**/*.ts",
-    "pretest": "npm run lint && npm run compile",
-    "test": "node ./node_modules/vscode/bin/test",
-    "vscode:prepublish": "npm run compile"
+    "clean": "rimraf out",
+    "prebuild": "npm run clean && cpy \"test/suite/fixtures/**\" \"../out\" --cwd=src --parents",
+    "build": "tsc",
+    "watch": "npm run compile -- -watch",
+    "lint": "eslint src/**/*.ts",
+    "pretest": "npm run lint && npm run build",
+    "test": "node out/test/runTest.js",
+    "vscode:prepublish": "npm run build"
   },
   "husky": {
     "hooks": {
