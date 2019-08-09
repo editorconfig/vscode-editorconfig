@@ -4,6 +4,6 @@ node_modules
 Thumbs.db
 *.log
 .vscode-test
-test/fixtures/end_of_line/*/test
-test/fixtures/insert_final_newline/*/test
-test/fixtures/trim_trailing_whitespace/*/test
+src/test/suite/fixtures/end_of_line/*/test
+src/test/suite/fixtures/insert_final_newline/*/test
+src/test/suite/fixtures/trim_trailing_whitespace/*/test
