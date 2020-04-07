@@ -11,11 +11,9 @@ import languageExtensionMap from './languageExtensionMap'
 export async function resolveTextEditorOptions(
 	doc: TextDocument,
 	{
-		defaults = pickWorkspaceDefaults(),
 		onBeforeResolve,
 		onEmptyConfig,
 	}: {
-		defaults?: TextEditorOptions
 		onBeforeResolve?: (relativePath: string) => void
 		onEmptyConfig?: (relativePath: string) => void
 	} = {},
@@ -24,7 +22,7 @@ export async function resolveTextEditorOptions(
 		onBeforeResolve,
 	})
 	if (editorconfigSettings) {
-		return fromEditorConfig(editorconfigSettings, defaults)
+		return fromEditorConfig(editorconfigSettings, pickWorkspaceDefaults(doc))
 	}
 	if (onEmptyConfig) {
 		const rp = resolveFile(doc).relativePath
@@ -66,7 +64,9 @@ export async function applyTextEditorOptions(
 /**
  * Picks EditorConfig-relevant props from the editor's default configuration.
  */
-export function pickWorkspaceDefaults(): {
+export function pickWorkspaceDefaults(
+	doc?: TextDocument,
+): {
 	/**
 	 * The number of spaces a tab is equal to. When `editor.detectIndentation`
 	 * is on, this property value will be `undefined`.
@@ -78,7 +78,7 @@ export function pickWorkspaceDefaults(): {
 	 */
 	insertSpaces?: boolean
 } {
-	const workspaceConfig = workspace.getConfiguration('editor', null)
+	const workspaceConfig = workspace.getConfiguration('editor', doc)
 	const detectIndentation = workspaceConfig.get<boolean>('detectIndentation')
 
 	return detectIndentation

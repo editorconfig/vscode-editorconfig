@@ -6,7 +6,7 @@
   "version": "0.14.4",
   "icon": "EditorConfig_icon.png",
   "engines": {
-    "vscode": "^1.41.0"
+    "vscode": "^1.43.0"
   },
   "author": "EditorConfig Team",
   "license": "MIT",
@@ -68,7 +68,7 @@
     "@types/lodash.get": "^4.4.6",
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.12.17",
-    "@types/vscode": "^1.41.0",
+    "@types/vscode": "^1.43.0",
     "@typescript-eslint/eslint-plugin": "^2.11.0",
     "@typescript-eslint/parser": "^2.11.0",
     "cash-cp": "^0.2.0",
