@@ -3,7 +3,7 @@
   "displayName": "EditorConfig for VS Code",
   "description": "EditorConfig Support for Visual Studio Code",
   "publisher": "EditorConfig",
-  "version": "0.14.5",
+  "version": "0.15.0",
   "icon": "EditorConfig_icon.png",
   "engines": {
     "vscode": "^1.43.0"
@@ -56,7 +56,27 @@
           "group": "EditorConfig@1"
         }
       ]
-    }
+    },
+    "languages": [
+      {
+        "id": "editorconfig",
+        "aliases": [
+          "EditorConfig",
+          "editorconfig"
+        ],
+        "filenames": [
+          ".editorconfig"
+        ],
+        "configuration": "./editorconfig.language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "editorconfig",
+        "scopeName": "source.editorconfig",
+        "path": "./syntaxes/editorconfig.tmLanguage.json"
+      }
+    ]
   },
   "dependencies": {
     "editorconfig": "^0.15.3",

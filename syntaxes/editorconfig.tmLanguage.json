@@ -1,0 +1,381 @@
+{
+  "name": "EditorConfig",
+  "scopeName": "source.editorconfig",
+  "fileTypes": ["editorconfig"],
+  "patterns": [
+    {
+      "include": "#main"
+    }
+  ],
+  "firstLineMatch": "(?ix)\n\n# Emacs modeline\n-\\*-(?:\\s*(?=[^:;\\s]+\\s*-\\*-)|(?:.*?[;\\s]|(?<=-\\*-))mode\\s*:\\s*)\n\teditor-?config(?:config|-conf)?\n(?=[\\s;]|(?<![-*])-\\*-).*?-\\*-\n\n|\n\n# Vim modeline\n(?:(?:\\s|^)vi(?:m[<=>]?\\d+|m)?|\\sex)(?=:(?=\\s*set?\\s[^\\n:]+:)|:(?!\\s* set?\\s))(?:(?:\\s|\\s*:\\s*)\\w*(?:\\s*=(?:[^\\n\\\\\\s]|\\\\.)*)?)*[\\s:](?:filetype|ft|syntax)\\s*=\n\teditor-?config(?:-config|conf)?\n(?=\\s|:|$)",
+  "repository": {
+    "main": {
+      "patterns": [
+        {
+          "include": "#comment"
+        },
+        {
+          "include": "#section"
+        },
+        {
+          "include": "#rule"
+        }
+      ]
+    },
+    "bareword": {
+      "name": "string.unquoted.bareword.editorconfig",
+      "match": "[^=#;\\s]+"
+    },
+    "comment": {
+      "patterns": [
+        {
+          "name": "comment.line.number-sign.editorconfig",
+          "begin": "(\\s*)(#)",
+          "end": "$",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.whitespace.comment.leading.editorconfig"
+            },
+            "2": {
+              "name": "punctuation.definition.comment.editorconfig"
+            }
+          }
+        },
+        {
+          "name": "comment.line.semicolon.editorconfig",
+          "begin": "(\\s*)(;)",
+          "end": "$",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.whitespace.comment.leading.editorconfig"
+            },
+            "2": {
+              "name": "punctuation.definition.comment.editorconfig"
+            }
+          }
+        }
+      ]
+    },
+    "escape": {
+      "name": "constant.character.escape.editorconfig",
+      "match": "\\\\."
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "constant.language.boolean.${1:/downcase}.editorconfig",
+          "match": "(?i)(?<=\\s|=)(true|false|on|off|yes|no)(?=$|\\s)"
+        },
+        {
+          "name": "constant.language.${1:/downcase}.editorconfig",
+          "match": "(?i)(?<=\\s|=)(CRLF|CR|LF|tab|space|unset)(?=$|\\s)"
+        }
+      ]
+    },
+    "number": {
+      "name": "constant.numeric.decimal.integer.int.editorconfig",
+      "match": "\\d+"
+    },
+    "pathSpec": {
+      "patterns": [
+        {
+          "include": "#escape"
+        },
+        {
+          "include": "#pathBracketsCurly"
+        },
+        {
+          "include": "#pathBracketsSquare"
+        },
+        {
+          "match": "\\*{2}",
+          "name": "keyword.operator.glob.wildcard.globstar.editorconfig"
+        },
+        {
+          "match": "\\*",
+          "name": "keyword.operator.glob.wildcard.editorconfig"
+        },
+        {
+          "match": "\\?",
+          "name": "keyword.operator.glob.wildcard.editorconfig"
+        }
+      ]
+    },
+    "pathBracketsCurly": {
+      "begin": "{",
+      "end": "}|(?=$)",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.brace.bracket.curly.begin.editorconfig"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.brace.bracket.curly.end.editorconfig"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#escape"
+        },
+        {
+          "match": ",",
+          "name": "punctuation.separator.delimiter.comma.editorconfig"
+        },
+        {
+          "include": "#pathRange"
+        },
+        {
+          "include": "#pathSpec"
+        }
+      ]
+    },
+    "pathRange": {
+      "name": "meta.range.editorconfig",
+      "match": "([0-9]+)(\\.{2})([0-9]+)",
+      "captures": {
+        "1": {
+          "patterns": [
+            {
+              "include": "#number"
+            }
+          ]
+        },
+        "2": {
+          "name": "punctuation.definition.separator.range.editorconfig"
+        },
+        "3": {
+          "patterns": [
+            {
+              "include": "#number"
+            }
+          ]
+        }
+      }
+    },
+    "pathBracketsSquare": {
+      "begin": "\\[",
+      "end": "\\]|(?=$)",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.brace.bracket.square.begin.editorconfig"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.brace.bracket.square.end.editorconfig"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#pathSpec"
+        }
+      ]
+    },
+    "rule": {
+      "patterns": [
+        {
+          "name": "meta.rule.${1:/downcase}.editorconfig",
+          "begin": "^\\s*(indent_(width))(?=$|[=\\s])",
+          "end": "$",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.other.definition.indent_size.editorconfig"
+            },
+            "2": {
+              "name": "invalid.illegal.confusable.editorconfig"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#value"
+            }
+          ]
+        },
+        {
+          "name": "meta.rule.${1:/downcase}.editorconfig",
+          "begin": "^\\s*(tab_(size))(?=$|[=\\s])",
+          "end": "$",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.other.definition.tab_width.editorconfig"
+            },
+            "2": {
+              "name": "invalid.illegal.confusable.editorconfig"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#value"
+            }
+          ]
+        },
+        {
+          "name": "meta.rule.${1:/downcase}.editorconfig",
+          "begin": "(?ix)\n^ \\s*\n( end_of_line\n| indent_size\n| indent_style\n| insert_final_newline\n| max_line_length\n| root\n| tab_width\n| trim_trailing_whitespace\n) \\s* (=)",
+          "end": "$",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.other.definition.${1:/downcase}.editorconfig"
+            },
+            "2": {
+              "name": "punctuation.separator.key-value.editorconfig"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#value"
+            }
+          ]
+        },
+        {
+          "name": "meta.rule.charset.editorconfig",
+          "begin": "^\\s*(charset)\\s*(=)",
+          "end": "$",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.other.definition.${1:/downcase}.editorconfig"
+            },
+            "2": {
+              "name": "punctuation.separator.key-value.editorconfig"
+            }
+          },
+          "patterns": [
+            {
+              "name": "constant.language.charset.encoding.${1:/downcase}.editorconfig",
+              "match": "(?i)(?<=\\s|=)([-\\w]+)(?=$|\\s)"
+            },
+            {
+              "include": "#value"
+            }
+          ]
+        },
+        {
+          "name": "meta.rule.custom.editorconfig",
+          "begin": "^\\s*(?![\\[#;])([^\\s=]+)\\s*(=)",
+          "end": "$",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.other.definition.custom.editorconfig"
+            },
+            "2": {
+              "name": "punctuation.separator.key-value.editorconfig"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#value"
+            },
+            {
+              "include": "#bareword"
+            }
+          ]
+        }
+      ]
+    },
+    "section": {
+      "name": "meta.section.editorconfig",
+      "begin": "^\\s*(?=\\[.*?\\])",
+      "end": "(?!\\G)(?=^\\s*\\[)",
+      "patterns": [
+        {
+          "include": "#sectionHeader"
+        },
+        {
+          "include": "#comment"
+        },
+        {
+          "include": "#rule"
+        }
+      ]
+    },
+    "sectionHeader": {
+      "name": "meta.section.header.editorconfig",
+      "begin": "\\G\\[",
+      "end": "\\]|(?=$)",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.section.brace.bracket.square.begin.editorconfig"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.brace.bracket.square.end.editorconfig"
+        }
+      },
+      "contentName": "entity.name.section.group-title.editorconfig",
+      "patterns": [
+        {
+          "name": "keyword.control.logical.not.negation.editorconfig",
+          "match": "\\G!"
+        },
+        {
+          "include": "#pathSpec"
+        }
+      ]
+    },
+    "string": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.editorconfig",
+          "begin": "\"",
+          "end": "\"",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.begin.editorconfig"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.end.editorconfig"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#escape"
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.editorconfig",
+          "begin": "'",
+          "end": "'",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.begin.editorconfig"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.end.editorconfig"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#escape"
+            }
+          ]
+        }
+      ]
+    },
+    "value": {
+      "patterns": [
+        {
+          "include": "#escape"
+        },
+        {
+          "include": "#comment"
+        },
+        {
+          "include": "#keywords"
+        },
+        {
+          "include": "#number"
+        },
+        {
+          "include": "#string"
+        }
+      ]
+    }
+  }
+}
