@@ -18,7 +18,7 @@ export function activate(ctx: ExtensionContext) {
 
 	// register .editorconfig file completion provider
 	const editorConfigFileSelector: DocumentSelector = {
-		language: 'properties',
+		language: 'editorconfig',
 		pattern: '**/.editorconfig',
 		scheme: 'file',
 	}

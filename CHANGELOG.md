@@ -1,6 +1,17 @@
+## 0.15.1
+
+- **Fix:** Fixed code completion for .editorconfig file
+  ([`#270`](https://github.com/editorconfig/editorconfig-vscode/pull/270)).
+
+## 0.15.0
+
+- **New:** Added grammar for .editorconfig file.
+  ([`#269`](https://github.com/editorconfig/editorconfig-vscode/pull/269)).
+
 ## 0.14.4
 
-- **Fix:** EditorConfig modifies selection incorrectly when the extension host is busy
+- **Fix:** EditorConfig modifies selection incorrectly when the extension host
+  is busy
   ([`#236`](https://github.com/editorconfig/editorconfig-vscode/issues/236)).
 
 ## 0.14.3
