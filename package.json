@@ -1,6 +1,6 @@
 {
   "name": "EditorConfig",
-  "displayName": "EditorConfig for VS Code",
+  "displayName": "EditorConfig",
   "description": "EditorConfig Support for Visual Studio Code",
   "publisher": "EditorConfig",
   "version": "0.15.1",
