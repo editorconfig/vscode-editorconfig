@@ -33,6 +33,12 @@ Feel free to submit any issues you may have via the
 ext install EditorConfig
 ```
 
+Also make sure you have the `editorconfig` npm module instaled globally:
+
+```
+npm install --global editorconfig
+```
+
 ## Supported Properties
 
 - `indent_style`
