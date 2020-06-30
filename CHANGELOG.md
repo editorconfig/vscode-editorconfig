@@ -1,3 +1,8 @@
+## 0.15.2
+
+- **New:** Add link to editorconfig.org while generating .editorconfig file.
+  ([`#271`](https://github.com/editorconfig/editorconfig-vscode/issues/271)).
+
 ## 0.15.1
 
 - **Fix:** Fixed code completion for .editorconfig file
