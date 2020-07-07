@@ -28,10 +28,14 @@ Feel free to submit any issues you may have via the
 [issue tracker](https://github.com/editorconfig/editorconfig-vscode/issues).
 
 ## Installation
+- Open `Visual Studio Code`
+- Hit `CTRL + P` or `CMD + P` (Mac)
+- Type `ext install EditorConfig` command
+- It will open VSCode Extentions Marketplace with a few plugins, install the one called `EditorConfig for VS Code` by `EditorConfig`
 
-```
-ext install EditorConfig
-```
+Alternatively:
+- Go directly to VSCode Extensions Marketplace via `Ctrl+Shift+X` or `CMD+Shift+X` (Mac)
+- Search for `EditorConfig`, and you will get the same results
 
 ## Supported Properties
 
