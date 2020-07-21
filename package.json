@@ -64,8 +64,8 @@
           "EditorConfig",
           "editorconfig"
         ],
-        "filenames": [
-          ".editorconfig"
+        "filenamePatterns": [
+          "*.editorconfig"
         ],
         "configuration": "./editorconfig.language-configuration.json"
       }
