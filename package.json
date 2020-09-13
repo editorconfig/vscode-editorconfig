@@ -31,7 +31,7 @@
     "theme": "dark"
   },
   "activationEvents": [
-    "*"
+    "workspaceContains:**/.editorConfig"
   ],
   "main": "./out/editorConfigMain.js",
   "types": "./out/editorConfigMain.d.ts",
