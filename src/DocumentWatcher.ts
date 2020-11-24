@@ -4,7 +4,6 @@ import {
 	Selection,
 	TextDocument,
 	TextDocumentSaveReason,
-	TextEdit,
 	TextEditorOptions,
 	window,
 	workspace,
@@ -93,7 +92,7 @@ export default class DocumentWatcher {
 				e.waitUntil(transformations)
 				if (selections.length) {
 					const edits = await transformations
-					if (activeEditor && edits.length > 0) {
+					if (activeEditor && edits.length) {
 						activeEditor.selections = selections
 					}
 				}
@@ -135,7 +134,7 @@ export default class DocumentWatcher {
 	private async calculatePreSaveTransformations(
 		doc: TextDocument,
 		reason: TextDocumentSaveReason,
-	): Promise<TextEdit[]> {
+	) {
 		const editorconfigSettings = await resolveCoreConfig(doc, {
 			onBeforeResolve: this.onBeforeResolve,
 		})
@@ -146,9 +145,8 @@ export default class DocumentWatcher {
 			return []
 		}
 
-		return Array.prototype.concat.call(
-			[],
-			...this.preSaveTransformations.map(transformer => {
+		return [
+			...this.preSaveTransformations.flatMap(transformer => {
 				const { edits, message } = transformer.transform(
 					editorconfigSettings,
 					doc,
@@ -156,12 +154,13 @@ export default class DocumentWatcher {
 				)
 				if (edits instanceof Error) {
 					this.log(`${relativePath}: ${edits.message}`)
+					return []
 				}
 				if (message) {
 					this.log(`${relativePath}: ${message}`)
 				}
 				return edits
 			}),
-		)
+		]
 	}
 }

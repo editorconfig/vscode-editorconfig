@@ -107,8 +107,8 @@ export async function resolveCoreConfig(
 	if (!fileName) {
 		return {}
 	}
-	if (onBeforeResolve && relativePath) {
-		onBeforeResolve(relativePath)
+	if (relativePath) {
+		onBeforeResolve?.(relativePath)
 	}
 	const config = await editorconfig.parse(fileName)
 	if (config.indent_size === 'tab') {

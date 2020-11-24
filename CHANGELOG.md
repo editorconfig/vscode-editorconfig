@@ -1,3 +1,13 @@
+## 0.15.3
+
+- **Fix:** end_of_line rule no longer destroys redo history
+  ([`#288`](https://github.com/editorconfig/editorconfig-vscode/issues/288)).
+
+## 0.15.2
+
+- Update dependencies.
+- Remove dependency on `lodash`, `lodash.get`, `cash-cp`.
+
 ## 0.15.1
 
 - **Fix:** Fixed code completion for .editorconfig file
