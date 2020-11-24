@@ -3,7 +3,7 @@
   "displayName": "EditorConfig for VS Code",
   "description": "EditorConfig Support for Visual Studio Code",
   "publisher": "EditorConfig",
-  "version": "0.15.3",
+  "version": "0.15.4",
   "icon": "EditorConfig_icon.png",
   "engines": {
     "vscode": "^1.51.1"
@@ -60,13 +60,14 @@
     "languages": [
       {
         "id": "editorconfig",
+        "extensions": [
+          ".editorconfig"
+        ],
         "aliases": [
           "EditorConfig",
           "editorconfig"
         ],
-        "filenames": [
-          ".editorconfig"
-        ],
+        "filenames": [],
         "configuration": "./editorconfig.language-configuration.json"
       }
     ],

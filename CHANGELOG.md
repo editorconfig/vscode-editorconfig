@@ -1,3 +1,8 @@
+## 0.15.4
+
+- **Fix:** related all files with extension `.editorconfig` as EditorConfig
+  ([`#281`](https://github.com/editorconfig/editorconfig-vscode/issues/281)).
+
 ## 0.15.3
 
 - **Fix:** end_of_line rule no longer destroys redo history
