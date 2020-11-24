@@ -38,7 +38,14 @@ export async function generateEditorConfig(uri: Uri) {
 		const editor = workspace.getConfiguration('editor', currentUri)
 		const files = workspace.getConfiguration('files', currentUri)
 
-		const settingsLines = ['root = true', '', '[*]']
+		const settingsLines = [
+			'# EditorConfig is awesome: https://EditorConfig.org',
+			'',
+			'# top-most EditorConfig file',
+			'root = true',
+			'',
+			'[*]',
+		]
 		function addSetting(key: string, value?: string | number | boolean): void {
 			if (value !== undefined) {
 				settingsLines.push(`${key} = ${value}`)

@@ -1,3 +1,8 @@
+## 0.15.5
+
+- **Fix:** add comments to top of generated `.editorconfig` file
+  ([`#271`](https://github.com/editorconfig/editorconfig-vscode/issues/271)).
+
 ## 0.15.4
 
 - **Fix:** related all files with extension `.editorconfig` as EditorConfig
