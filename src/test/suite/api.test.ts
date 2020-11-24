@@ -170,7 +170,7 @@ suite('EditorConfig extension', () => {
 				},
 			},
 		].forEach(scenario => {
-			assert.deepEqual(
+			assert.deepStrictEqual(
 				api.fromEditorConfig(scenario.config as KnownProps, scenario.defaults),
 				scenario.expected,
 			)
@@ -230,7 +230,10 @@ suite('EditorConfig extension', () => {
 				},
 			},
 		].forEach(scenario => {
-			assert.deepEqual(api.toEditorConfig(scenario.options), scenario.expected)
+			assert.deepStrictEqual(
+				api.toEditorConfig(scenario.options),
+				scenario.expected,
+			)
 		})
 	})
 })

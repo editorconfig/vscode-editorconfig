@@ -1,4 +1,3 @@
-import get = require('lodash.get')
 import * as path from 'path'
 import {
 	Disposable,
@@ -83,7 +82,7 @@ export default class DocumentWatcher {
 			workspace.onWillSaveTextDocument(async e => {
 				let selections: Selection[] = []
 				const activeEditor = window.activeTextEditor
-				const activeDoc = get(activeEditor, 'document')
+				const activeDoc = activeEditor?.document
 				if (activeDoc && activeDoc === e.document && activeEditor) {
 					selections = activeEditor.selections
 				}

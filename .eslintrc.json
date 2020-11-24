@@ -34,9 +34,10 @@
 
     // TypeScript-ESLint
     "@typescript-eslint/camelcase": "off",
-    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/indent": "off",
     "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-extra-semi": "off",
     "@typescript-eslint/no-object-literal-type-assertion": "off",
     "@typescript-eslint/no-parameter-properties": "off",
     "@typescript-eslint/no-this-alias": [

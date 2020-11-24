@@ -1,14 +1,14 @@
 import { KnownProps } from 'editorconfig'
 import { EndOfLine, TextEdit } from 'vscode'
 
-import PreSaveTransformation from './PreSaveTransformation'
+import { PreSaveTransformation } from './PreSaveTransformation'
 
 const eolMap = {
 	LF: EndOfLine.LF,
 	CRLF: EndOfLine.CRLF,
 }
 
-class SetEndOfLine extends PreSaveTransformation {
+export class SetEndOfLine extends PreSaveTransformation {
 	private eolMap = eolMap
 
 	public transform(editorconfigProperties: KnownProps) {
@@ -23,5 +23,3 @@ class SetEndOfLine extends PreSaveTransformation {
 			: { edits: [] }
 	}
 }
-
-export default SetEndOfLine

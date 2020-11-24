@@ -1,8 +1,7 @@
 import { KnownProps } from 'editorconfig'
-import get = require('lodash.get')
 import { Position, TextDocument, TextEdit } from 'vscode'
 
-import PreSaveTransformation from './PreSaveTransformation'
+import { PreSaveTransformation } from './PreSaveTransformation'
 
 const lineEndings = {
 	CR: '\r',
@@ -10,7 +9,7 @@ const lineEndings = {
 	LF: '\n',
 }
 
-export default class InsertFinalNewline extends PreSaveTransformation {
+export class InsertFinalNewline extends PreSaveTransformation {
 	private lineEndings = lineEndings
 
 	public transform(editorconfigProperties: KnownProps, doc: TextDocument) {
@@ -27,7 +26,7 @@ export default class InsertFinalNewline extends PreSaveTransformation {
 
 		const position = new Position(lastLine.lineNumber, lastLine.text.length)
 
-		const eol = get(editorconfigProperties, 'end_of_line', 'lf').toUpperCase()
+		const eol = (editorconfigProperties.end_of_line ?? 'lf').toUpperCase()
 
 		return {
 			edits: [

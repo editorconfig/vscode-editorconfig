@@ -8,8 +8,8 @@ os:
 
 node_js:
   - 'lts/*'
+  - '12'
   - '10'
-  - '8'
 
 before_install:
   - |

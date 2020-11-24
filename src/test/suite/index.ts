@@ -5,9 +5,9 @@ import * as path from 'path'
 export function run(): Promise<void> {
 	// Create the mocha test
 	const mocha = new Mocha({
+		color: true,
 		ui: 'tdd',
 	})
-	mocha.useColors(true)
 
 	const testsRoot = path.resolve(__dirname, '..')
 

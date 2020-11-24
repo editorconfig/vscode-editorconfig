@@ -3,8 +3,8 @@
     "baseUrl": "src",
     "declaration": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["es6"],
-    "module": "commonjs",
+    "lib": ["ES2019"],
+    "module": "CommonJS",
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -14,7 +14,7 @@
     "rootDir": "src",
     "sourceMap": true,
     "strict": true,
-    "target": "es6"
+    "target": "ES2019"
   },
   "exclude": ["node_modules", "out", ".vscode-test"]
 }

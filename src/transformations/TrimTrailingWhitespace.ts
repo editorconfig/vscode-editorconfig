@@ -11,9 +11,9 @@ import {
 	workspace,
 } from 'vscode'
 
-import PreSaveTransformation from './PreSaveTransformation'
+import { PreSaveTransformation } from './PreSaveTransformation'
 
-class TrimTrailingWhitespace extends PreSaveTransformation {
+export class TrimTrailingWhitespace extends PreSaveTransformation {
 	public transform(
 		editorconfigProperties: KnownProps,
 		doc: TextDocument,
@@ -91,5 +91,3 @@ class TrimTrailingWhitespace extends PreSaveTransformation {
 		return input.replace(/[\s\uFEFF\xA0]+$/g, '')
 	}
 }
-
-export default TrimTrailingWhitespace

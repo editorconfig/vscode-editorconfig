@@ -1,5 +1,4 @@
 import * as editorconfig from 'editorconfig'
-import get = require('lodash.get')
 import { TextDocument, TextEditorOptions, window, workspace } from 'vscode'
 
 import languageExtensionMap from './languageExtensionMap'
@@ -161,10 +160,10 @@ export function fromEditorConfig(
 	const resolved: TextEditorOptions = {
 		tabSize:
 			config.indent_style === 'tab'
-				? get(config, 'tab_width', config.indent_size)
-				: get(config, 'indent_size', config.tab_width),
+				? config.tab_width ?? config.indent_size
+				: config.indent_size ?? config.tab_width,
 	}
-	if (get(resolved, 'tabSize') === 'tab') {
+	if (resolved.tabSize === 'tab') {
 		resolved.tabSize = config.tab_width
 	}
 	return {
