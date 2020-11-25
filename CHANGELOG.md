@@ -1,3 +1,7 @@
+## 0.16.2
+
+- Defer to VSCode's built-in EOL sequence normalization, when appropriate.
+
 ## 0.16.1
 
 - **Fix:** default template path RegExp.

@@ -19,39 +19,17 @@ export class SetEndOfLine extends PreSaveTransformation {
 		const eolKey = (editorconfigProperties.end_of_line || '').toUpperCase()
 		const eol = this.eolMap[eolKey as keyof typeof eolMap]
 
-		if (!eol) {
-			return noEdits()
-		}
-
-		const text = doc.getText()
-		switch (eol) {
-			case EndOfLine.LF:
-				if (/\r\n/.test(text)) {
-					return createEdits()
-				}
-				break
-			case EndOfLine.CRLF:
-				// if there is an LF not preceded by a CR
-				if (/(?<!\r)\n/.test(text)) {
-					return createEdits()
-				}
-				break
-		}
-
-		return noEdits()
-
-		function noEdits() {
-			return { edits: [] }
-		}
-
 		/**
-		 * @warning destroys redo history
+		 * VSCode normalizes line endings on every file-save operation
+		 * according to whichever EOL sequence is dominant. If the file already
+		 * has the appropriate dominant EOL sequence, there is nothing more to do,
+		 * so we defer to VSCode's built-in functionality by applying no edits.
 		 */
-		function createEdits() {
-			return {
-				edits: [TextEdit.setEndOfLine(eol)],
-				message: `setEndOfLine(${eolKey})`,
-			}
-		}
+		return doc.eol === eol
+			? { edits: [] }
+			: {
+					edits: [TextEdit.setEndOfLine(eol)],
+					message: `setEndOfLine(${eolKey})`,
+			  }
 	}
 }
