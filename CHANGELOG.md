@@ -1,3 +1,7 @@
+## 0.16.3
+
+- Improve installation instructions in README.
+
 ## 0.16.2
 
 - Defer to VSCode's built-in EOL sequence normalization, when appropriate.

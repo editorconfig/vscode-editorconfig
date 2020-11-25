@@ -29,9 +29,12 @@ Feel free to submit any issues you may have via the
 
 ## Installation
 
-```
-ext install EditorConfig
-```
+When identifying an extension, provide the full name of the form
+`publisher.extension`. For this extension, that's `editorconfig.editorconfig`.
+
+See
+[Extension Marketplace](https://code.visualstudio.com/docs/editor/extension-gallery)
+for more information on the multiple ways of installing VSCode extensions.
 
 ## Supported Properties
 
