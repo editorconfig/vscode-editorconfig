@@ -1,3 +1,8 @@
+## 0.16.0
+
+- **New:** expose configuration settings for template generation
+  ([`#277`](https://github.com/editorconfig/editorconfig-vscode/issues/277)).
+
 ## 0.15.5
 
 - **Fix:** add comments to top of generated `.editorconfig` file
