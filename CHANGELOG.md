@@ -1,3 +1,7 @@
+## 0.16.1
+
+- **Fix:** default template path RegExp.
+
 ## 0.16.0
 
 - **New:** expose configuration settings for template generation

@@ -55,7 +55,7 @@ export async function generateEditorConfig(uri: Uri) {
 			let templateBuffer: Buffer
 			try {
 				templateBuffer = await readFile(
-					/default/i.test(template) ? defaultTemplatePath : template,
+					/^default$/i.test(template) ? defaultTemplatePath : template,
 				)
 			} catch (error) {
 				window.showErrorMessage(
