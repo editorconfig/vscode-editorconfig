@@ -19,6 +19,8 @@ export class SetEndOfLine extends PreSaveTransformation {
 		const eolKey = (editorconfigProperties.end_of_line || '').toUpperCase()
 		const eol = this.eolMap[eolKey as keyof typeof eolMap]
 
+		if (!eol) return noEdits()
+
 		/**
 		 * VSCode normalizes line endings on every file-save operation
 		 * according to whichever EOL sequence is dominant. If the file already
@@ -26,10 +28,14 @@ export class SetEndOfLine extends PreSaveTransformation {
 		 * so we defer to VSCode's built-in functionality by applying no edits.
 		 */
 		return doc.eol === eol
-			? { edits: [] }
+			? noEdits()
 			: {
 					edits: [TextEdit.setEndOfLine(eol)],
 					message: `setEndOfLine(${eolKey})`,
 			  }
+
+		function noEdits() {
+			return { edits: [] }
+		}
 	}
 }
