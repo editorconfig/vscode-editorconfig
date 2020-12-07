@@ -1,3 +1,8 @@
+## 0.16.4
+
+- **Fix:** don't set EOL when no EOL config
+  ([`#299`](https://github.com/editorconfig/editorconfig-vscode/issues/299))
+
 ## 0.16.3
 
 - Improve installation instructions in README.

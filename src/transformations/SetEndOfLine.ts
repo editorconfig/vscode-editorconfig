@@ -25,7 +25,7 @@ export class SetEndOfLine extends PreSaveTransformation {
 		 * has the appropriate dominant EOL sequence, there is nothing more to do,
 		 * so we defer to VSCode's built-in functionality by applying no edits.
 		 */
-		return doc.eol === eol
+		return !eol || doc.eol === eol
 			? { edits: [] }
 			: {
 					edits: [TextEdit.setEndOfLine(eol)],
