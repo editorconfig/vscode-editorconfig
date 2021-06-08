@@ -1,3 +1,9 @@
+## 0.16.5
+
+- **Fix:** apply config on window reload
+  ([`#283`](https://github.com/editorconfig/editorconfig-vscode/issues/283))
+- Change activation event to `onStartupFinished` instead of `*`
+
 ## 0.16.4
 
 - **Fix:** don't set EOL when no EOL config
