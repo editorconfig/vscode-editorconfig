@@ -92,6 +92,7 @@ export default class DocumentWatcher {
 		)
 
 		this.disposable = Disposable.from.apply(this, subscriptions)
+		this.log('Document watcher initialized')
 	}
 
 	public onEmptyConfig = (relativePath: string) => {

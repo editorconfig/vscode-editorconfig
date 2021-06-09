@@ -1,7 +1,5 @@
 import * as editorconfig from 'editorconfig'
-import { TextDocument, TextEditorOptions, window, workspace } from 'vscode'
-
-import languageExtensionMap from './languageExtensionMap'
+import { TextDocument, TextEditorOptions, Uri, window, workspace } from 'vscode'
 
 /**
  * Resolves `TextEditorOptions` for a `TextDocument`, combining the editor's
@@ -128,25 +126,18 @@ export function resolveFile(
 	}
 	const file = getFile()
 	return {
-		fileName: file && file.toString(),
+		fileName: file?.fsPath,
 		relativePath: file && workspace.asRelativePath(file, true),
 	}
 
-	function getFile() {
+	function getFile(): Uri | undefined {
 		if (!doc.isUntitled) {
-			return doc.fileName
+			return doc.uri
 		}
-		const ext =
-			languageExtensionMap[
-				doc.languageId as keyof typeof languageExtensionMap
-			] || doc.languageId
-		const folder = workspace.getWorkspaceFolder(doc.uri)
-		return (
-			folder &&
-			folder.uri.with({
-				path: `${doc.fileName}.${ext}`,
-			})
-		)
+		if (workspace.workspaceFolders?.[0]) {
+			return Uri.joinPath(workspace.workspaceFolders[0].uri, doc.fileName)
+		}
+		return undefined
 	}
 }
 

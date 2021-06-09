@@ -14,6 +14,21 @@ async function main() {
 
 		// Download VS Code, unzip it and run the integration test
 		await runTests({ extensionDevelopmentPath, extensionTestsPath })
+
+		// Run test using a specific workspace
+		const untitledExtensionTestsPath = path.resolve(
+			__dirname,
+			'./untitled-suite/index',
+		)
+		const untitledWorkspace = path.resolve(
+			__dirname,
+			'./untitled-suite/fixtures/untitled',
+		)
+		await runTests({
+			extensionDevelopmentPath,
+			extensionTestsPath: untitledExtensionTestsPath,
+			launchArgs: [untitledWorkspace],
+		})
 	} catch (err) {
 		// tslint:disable-next-line:no-console
 		console.error('Failed to run tests')

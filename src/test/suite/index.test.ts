@@ -1,11 +1,12 @@
 import * as assert from 'assert'
 import * as os from 'os'
 import { Position, window, workspace, WorkspaceEdit } from 'vscode'
-import { getFixturePath, getOptionsForFixture, wait } from './testUtils'
+import { getFixturePath, getOptionsForFixture, wait } from '../testUtils'
 
 import * as utils from 'vscode-test-utils'
 
-suite('EditorConfig extension', () => {
+suite('EditorConfig extension', function () {
+	this.retries(2)
 	suiteTeardown(utils.closeAllFiles)
 
 	test('indent_style = tab; tab_width = n', async () => {

@@ -10,9 +10,7 @@ export async function getOptionsForFixture(file: string[]) {
 
 export function getFixturePath(file: string[]) {
 	return path.resolve(
-		path.join(
-			...[__dirname, '..', '..', 'test', 'suite', 'fixtures'].concat(file),
-		),
+		path.join(...[__dirname, '..', 'test', 'suite', 'fixtures'].concat(file)),
 	)
 }
 

@@ -122,7 +122,7 @@
     "clean": "rimraf out",
     "prebuild": "npm run clean",
     "build": "tsc",
-    "postbuild": "cp -r src/test/suite/fixtures out/test/suite && cp src/DefaultTemplate.editorconfig out",
+    "postbuild": "cp -r src/test/suite/fixtures out/test/suite && cp -r src/test/untitled-suite/fixtures out/test/untitled-suite && cp src/DefaultTemplate.editorconfig out",
     "lint": "eslint src/**/*.ts",
     "pretest": "npm run lint && npm run build",
     "prewatch": "npm run build",
