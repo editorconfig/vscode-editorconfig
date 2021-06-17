@@ -94,6 +94,12 @@
       }
     ]
   },
+  "capabilities": {
+    "virtualWorkspaces": {
+      "supported": false,
+      "description": "The `editorconfig` dependency requires fs access for parsing the config to use."
+    }
+  },
   "dependencies": {
     "editorconfig": "^0.15"
   },
